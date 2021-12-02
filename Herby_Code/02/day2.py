@@ -5,20 +5,21 @@ convert = lambda x, y: (x, int(y))
 inp = [convert(*l.split(' ')) for l in open('2.txt')]
 #inp = starmap(lambda x, y: (x, int(y)), inp)
 
-forw = sum(x for l, x in inp if l == 'forward')
-height = sum(x for l, x in inp if l == 'down') - sum(x for l, x in inp if l == 'up')
+#forw = sum(x for l, x in inp if l == 'forward')
+#height = sum(x for l, x in inp if l == 'down') - sum(x for l, x in inp if l == 'up')
 
 #print(forw * height)
-h, d, a = 0, 0, 0
+h, d0 = 0, 0
+d1, a = 0, 0
 for l, x in inp:
     if l == 'down':
-        #d += x
+        d0 += x
         a += x
     elif l == 'up':
-        #d -= x
+        d0 -= x
         a -= x
     elif l == 'forward':
         h += x
-        d += a*x
+        d1 += a*x
 
-print(f"Part 1: {forw*height}, Part 2: {h*d}")
+print(f"Part 1: {d0*h}, Part 2: {d1*h}")
