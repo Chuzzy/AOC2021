@@ -17,12 +17,9 @@ finished = [False for _ in boards]
 for draw in map(int, draws.split(',')):
     prev_drawn.add(draw)
 
-    for i, board in enumerate(boards): #not finished[i] and 
-        if board_done(board):
+    for i, board in enumerate(boards): 
+        if board_done(board) and not finished[i]:
+            finished[i] = True
             scores.append(draw * score(board))
 
-            finished[i] = True
-
-            if all(finished):
-                print('Part 1', scores[0], 'Part 2', scores[-1])
-                exit()
+print('Part 1', scores[0], 'Part 2', scores[-1])
