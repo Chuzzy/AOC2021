@@ -12,19 +12,14 @@ inp  = [r.strip().split('-') for r in open('12.txt')]
 small = lambda s: s.islower() # and s != 'end' and s != 'start'
 
 edges = defaultdict(set)
-small_vertices = set()
+vertices = set()
 
 for u, v in inp:
     edges[u].add(v)
     edges[v].add(u)
-    if small(u): small_vertices.add(u)
-    if small(v): small_vertices.add(v)
+    vertices |= {u, v}
 
-small_vertices.remove('start')
-small_vertices.remove('end')
-
-print(*list(edges.items()), sep='\n')
-
+vertices -= {'start', 'end'}
 
 def paths(edges, start='start', seen={'start'}, see_twice=None):
     total = 0
@@ -45,4 +40,6 @@ def paths(edges, start='start', seen={'start'}, see_twice=None):
     return total
 
 print('Part 1:', paths(edges))
-print('Part 2:', paths(edges) + sum(paths(edges, see_twice=v)-paths(edges) for v in small_vertices))
+part2 = paths(edges) + \
+    sum(paths(edges, see_twice=v)-paths(edges) for v in vertices if small(v))
+print('Part 2:', part2)
